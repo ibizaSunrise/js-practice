@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.1, 3.2, 3.3, 3.4</title>
+    <style>
+        .container {
+            display: flex;
+            width: 90%;
+            height: 100vh;
+            margin: 0 auto;
+            border: 1px solid blueviolet;
+        }
+
+        .right {
+            border-left: 1px solid blueviolet;
+            padding: 10px 0px 0px 10px;
+        }
+
+        .left {
+            padding: 10px 0px 0px 10px;
+        }
+
+        .textarea {
+            display: block;
+            height: 34px;
+            width: 90%;
+            overflow: hidden;
+            background: transparent;
+            resize: none;
+            font-size: 1.5rem;
+            color: gray;
+        }
+
+        .tb {
+            border-collapse: collapse;
+            width: 90%;
+
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 1px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <textarea class="textarea" placeholder="Напишите что-нибудь"></textarea>
+        </div>
+        <div class="right">
+            <p id="wordCount"></p>
+            <p id="symbolCount"></p>
+            <p id="letterCount"></p>
+            <div id="percent"></div>
+        </div>
+    </div>
+
+    <script>
+        const textArea = document.querySelector('.textarea');
+        const textAreaH = textArea.offsetHeight;
+
+        textArea.addEventListener('input', event => {
+            //для авторесайза текстареа
+            let $this = event.target;
+            $this.style.height = textAreaH + 'px';
+            $this.style.height = $this.scrollHeight + "px";
+        })
+
+        textArea.addEventListener('blur', () => {
+            const str = textArea.value.trim();
+            let wordCount = document.getElementById('wordCount');
+            let symbolCount = document.getElementById('symbolCount');
+            let letterCount = document.getElementById('letterCount');
+            let percent = document.getElementById('percent');
+            //Нахожу количество слов в тексте
+            wordCount.innerHTML = `Количество слов в тексте: ${str.split(' ').length}`;
+            //Нахожу количество символов в тексте
+            symbolCount.textContent = `Количество символов в тексте: ${str.length}`;
+            //Нахожу количество символов  без пробеловв
+            let strWithoutSpace = str.replace(/\s/g, '');
+            letterCount.textContent = `Количество символов исключая пробелы: ${strWithoutSpace.length}`;
+            //Нахожу процентное содержание символов и вывожу в таблицу
+            let onePercent = Math.floor(100 / str.length);
+            let obj = [...str].reduce(
+                (total, amount) => ({ ...total, [amount]: !total[amount] ? onePercent : total[amount] + onePercent }), {}
+            );
+            percent.innerHTML = `<table class = "tb"><td>Символ</td><td>Процентное содержание (%)</td></table>`
+
+            for (key in obj) {
+                let row = document.createElement('tr');
+                row.innerHTML = `<td>${key}</td><td>${obj[key]}</td>`;
+                document.querySelector('.tb').appendChild(row);
+            }
+        })
+
+    </script>
+</body>
+
+</html>
