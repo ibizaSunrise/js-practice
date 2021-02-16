@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.2</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 20px auto;
+            padding: 5px 50px;
+            border: 3px solid black;
+            height: 400px;
+            width: 300px;
+            box-sizing: border-box;
+            box-shadow: 10px 5px 5px black;
+        }
+
+        input:hover {
+            background-color: lightsteelblue;
+            transition-duration: 3s;
+        }
+
+        .btn {
+            height: 20px;
+            width: 100px;
+            border: 1px solid lightsteelblue;
+            margin-left: 20px;
+        }
+
+        .btn:hover {
+            background-color: lightsteelblue;
+            transition-duration: 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Площадь и периметр прямоугольника</h3>
+        <label>Введите длину в cm:<input type="number" id="num1"></label>
+        <label>Введите ширину в cm:<input type="number" id="num2"></label>
+        <button class="btn">Вычислить</button>
+        <p class="p"> </p>
+
+    </div>
+
+    <script>
+
+        const btn = document.querySelector('.btn');
+        btn.addEventListener('click', () => {
+            let h = document.querySelector('#num1');
+            let w = document.querySelector('#num2');
+            let p = document.querySelector('.p');
+            p.innerHTML = `Площадь: ${h.value * w.value} cm<sup>2</sup><br>Периметр: ${h.value * 2 + w.value * 2} cm`;
+        })
+
+    </script>
+</body>
+
+</html>

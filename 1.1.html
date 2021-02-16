@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1</title>
+    <style>
+        .container {
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            border: 3px solid black;
+            height: 400px;
+            width: 300px;
+            box-sizing: border-box;
+            box-shadow: 10px 5px 5px black;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        input {
+            margin-bottom: 10px;
+            height: 20px;
+            width: 100px;
+            margin-left: 20px;
+
+        }
+
+        input:hover {
+            background-color: lightsteelblue;
+            transition-duration: 5s;
+        }
+
+        .btn {
+            height: 20px;
+            width: 100px;
+            border: 1px solid lightsteelblue;
+            margin-left: 20px;
+        }
+
+        .btn:hover {
+            background-color: lightsteelblue;
+            transition-duration: 1s;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                background-color: lightsteelblue;
+            }
+
+            100% {
+                transform: rotate(360deg);
+
+            }
+        }
+
+        .sq {
+            width: 50px;
+            height: 50px;
+            border: 3px solid lightsteelblue;
+            margin: 20px auto;
+            animation: spin 3s linear 0s infinite;
+            box-shadow: inset 0 0 1em lightsteelblue, 0 0 1em black;
+        }
+
+        p {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Площадь и периметр квадрата</h3>
+        <div class="sq"></div>
+        <p>Введите длину стороны в cm: </p>
+        <input type="number" id="num">
+        <button class="btn">Вычислить</button>
+
+        <p class="p"> </p>
+
+    </div>
+
+    <script>
+        let btn = document.querySelector('.btn');
+        btn.addEventListener('click', () => {
+            let num = document.querySelector('#num');
+            let p = document.querySelector('.p');
+            p.innerHTML = `Площадь: ${num.value ** 2} cm<sup>2</sup><br>Периметр: ${num.value * 4} cm`;
+        })
+    </script>
+</body>
+
+</html>
