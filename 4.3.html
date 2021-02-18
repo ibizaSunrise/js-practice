@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.3</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea, .box, label {
+            width: 50vw;
+        }
+
+        .box {
+            color: red;
+        }
+        label{
+            background-color: gold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <textarea id="text" cols="35" rows="8" placeholder="Ваш текст"></textarea>
+
+        <label><input type="checkbox" id="ch">Хотите перевести руский текст в транслит?</label>
+        <div class="box"></div>
+    </div>
+    <script>
+        let box = document.querySelector('.box');
+        let text = document.getElementById('text');
+        let ch = document.querySelector('#ch');
+
+        const useTransl = text.addEventListener('blur', () => {
+            text.value = transliterate(transliterate(text.value), true);
+        })
+
+        function addContent() {
+            box.textContent = transliterate(this.value);
+        }
+
+        ch.addEventListener('input', () => {
+
+            if (ch.checked) {
+                text.addEventListener('blur', addContent);
+
+            } else {
+                box.textContent = "";
+                text.removeEventListener('blur', addContent);
+
+                useTransl;
+            }
+
+        })
+
+
+        let transliterate = (() => {
+            let rus = "щ   ш  ч  ц  ю  я  ё  ж  з  ъ  ы  э  а б в г д е з и й к л м н о п р с т у ф х ь".split(/ +/g);
+            let eng = "shh sh ch cz yu ya yo zh th `` y' e` a b v g d e z i j k l m n o p r s t u f h `".split(/ +/g);
+
+            return function (str, engToRus) {
+                for (let x = 0; x < rus.length; x++) {
+                    str = str.split(engToRus ? eng[x] : rus[x]).join(engToRus ? rus[x] : eng[x]);
+                    str = str.split(engToRus ? eng[x].toUpperCase() : rus[x].toUpperCase()).join(engToRus ? rus[x].toUpperCase() : eng[x].toUpperCase());
+                }
+                return str;
+            }
+        }
+        )();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4.2</title>
+</head>
+
+<body>
+    <textarea id="text" cols="35" rows="8" placeholder="Здесь появится преобразование в русский"></textarea>
+    <textarea id="text2" cols="35" rows="8" placeholder="Введите транслит"></textarea>
+    <script>
+        let text2 = document.getElementById('text2');
+        let text = document.getElementById('text');
+
+        text2.addEventListener('blur', () => {
+            text.value = transliterate(transliterate(text2.value), true);
+        })
+
+        const transliterate = (() => {
+                let rus = "щ   ш  ч  ц  ю  я  ё  ж  з  ъ  ы  э  а б в г д е з и й к л м н о п р с т у ф х ь".split(/ +/g);
+                let eng = "shh sh ch cz yu ya yo zh th `` y' e` a b v g d e z i j k l m n o p r s t u f h `".split(/ +/g);
+
+                return function (str, engToRus) {
+                    for (let x = 0; x < rus.length; x++) {
+                        str = str.split(engToRus ? eng[x] : rus[x]).join(engToRus ? rus[x] : eng[x]);
+                        str = str.split(engToRus ? eng[x].toUpperCase() : rus[x].toUpperCase()).join(engToRus ? rus[x].toUpperCase() : eng[x].toUpperCase());
+                    }
+                    return str;
+                }
+            }
+        )();
+    </script>
+</body>
+
+</html>
