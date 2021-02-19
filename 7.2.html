@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.1 && 7.2</title>
+    <style>
+        #box {
+            display: grid;
+            grid-template-columns: repeat(10, min-content);
+            grid-template-rows: repeat(5, min-content);
+            grid-gap: 6px;
+            border: 2px solid gray;
+            padding: 10px;
+            width: fit-content;
+            border-radius: 5px;
+        }
+
+        .key {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            padding: 3px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .active {
+            background-color: chartreuse;
+        }
+
+        textarea {
+            width: 500px;
+            margin: 30px;
+            height: 200px;
+
+        }
+
+        .key-long {
+            grid-column-start: 3;
+            grid-column-end: 9;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <textarea id="text" disabled></textarea>
+    <script>
+        const keyLayout = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?", "space"];
+
+        const box = document.querySelector('#box');
+        const textarea = document.querySelector('#text');
+
+        function createKeyboard() {
+            for (let elem of keyLayout) {
+                let btn = document.createElement('button');
+                btn.innerHTML = elem;
+                btn.value = elem;
+                btn.classList.add('key');
+                if (btn.value === "space") {
+                    btn.classList.add('key', 'key-long');
+                    btn.value = " ";
+                }
+                if (btn.value === "caps") {
+                    btn.removeAttribute('value');
+                    btn.setAttribute('id', 'caps');
+                }
+
+                box.appendChild(btn);
+            }
+
+        }
+        createKeyboard();
+
+        const caps = document.querySelector('#caps');
+
+        box.addEventListener('click', (event) => {
+
+            if (event.target.id === 'caps') {
+                caps.classList.toggle('active');
+            }
+            if (caps.classList.contains('active')) {
+                textarea.textContent += event.target.value.toUpperCase();
+            } else {
+                textarea.textContent += event.target.value;
+            }
+        })
+
+    </script>
+</body>
+
+</html>
