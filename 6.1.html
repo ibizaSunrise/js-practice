@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.1</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80vw;
+            height: 80vh;
+        }
+
+        td {
+            border: 1px solid black;
+            cursor: pointer;
+
+        }
+
+        .highlight {
+            background-color: chartreuse;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Угадай ячейки загаданные компьютером</h1>
+        <table id="tb"></table>
+
+        <script>
+            let tb = document.querySelector('#tb');
+
+            +function createTable() {
+                let count = 0;
+                for (let i = 0; i < 10; i++) {
+                    let tr = document.createElement('tr');
+
+                    for (let i = 0; i < 10; i++) {
+                        let td = document.createElement('td');
+
+                        td.setAttribute('data-num', count);
+                        count++;
+                        tr.appendChild(td);
+                    }
+                    tb.appendChild(tr);
+                }
+            }();
+
+            function getSet() {
+                let uniq = new Set();
+                while (uniq.size < 10) {
+                    uniq.add(Math.floor(Math.random() * 99));
+                };
+                return uniq;
+            }
+
+            const uniq = getSet();
+
+            tb.addEventListener('click', (event) => {
+                let data = +event.target.getAttribute('data-num');
+
+                uniq.has(data) && event.target.classList.add('highlight');
+            })
+
+        </script>
+</body>
+
+</html>
