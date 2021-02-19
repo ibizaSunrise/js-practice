@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.1</title>
+    <style>
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 80vw;
+            height: 80vh;
+        }
+
+        td {
+            border: 1px solid black;
+            cursor: pointer;
+
+        }
+
+        .highlight {
+            background-color: chartreuse;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Найди 10 ячеек за отведенное время</h1>
+        <span></span>
+        <table id="tb"></table>
+        <script>
+            let tb = document.querySelector('#tb');
+            let gameTime = 40;
+            let timer;
+
+            +function createTable() {
+                let count = 0;
+                for (let i = 0; i < 10; i++) {
+                    let tr = document.createElement('tr');
+
+                    for (let i = 0; i < 10; i++) {
+                        let td = document.createElement('td');
+
+                        td.setAttribute('data-num', count);
+                        count++;
+                        tr.appendChild(td);
+                    }
+                    tb.appendChild(tr);
+                }
+            }();
+
+
+            function getSet() {
+                let uniq = new Set();
+                while (uniq.size < 10) {
+                    uniq.add(Math.floor(Math.random() * 99));
+                };
+                return uniq;
+            }
+
+            const uniq = getSet();
+
+            tb.addEventListener('click', (event) => {
+                let data = +event.target.getAttribute('data-num');
+
+                if (uniq.has(data)) {
+                    event.target.classList.add('highlight');
+                    uniq.delete(data);
+                }
+            })
+
+                +function countdown() {
+                    let span = document.querySelector('span');
+                    span.textContent = `Отведенное время: ${gameTime} s`;
+                    gameTime--;
+                    if (gameTime < 0) {
+                        span.textContent = `GAME OVER`;
+                        tb.remove();
+
+                    } else if (uniq.size == 0) {
+                        span.textContent = `YOU WIN`;
+                        tb.remove();
+                    }
+                    else {
+                        timer = setTimeout(countdown, 1000);
+                    }
+                }();
+        </script>
+</body>
+
+</html>
