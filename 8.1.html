@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8.1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        .container {
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(4, min-content);
+            grid-template-rows: repeat(8, min-content);
+            font-family: "Tahoma";
+            width: fit-content;
+
+        }
+
+        .item {
+            border: 1px solid green;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            padding-top: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: rgb(29, 34, 25);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+        }
+
+        .item--long {
+            grid-column-start: 1;
+            grid-column-end: 5;
+            width: 100%;
+            padding: 0;
+            border: 1px solid black;
+            outline: none;
+            text-align: right;
+            padding-right: 5px;
+            font-size: 20px;
+        }
+
+
+        .item--mid {
+            grid-column-start: 3;
+            grid-column-end: 5;
+            width: 100%;
+        }
+
+        .item--memory {
+            background-color: lightgreen;
+        }
+
+        .active {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="box">
+        <input class="item item--long" type="text" id="text" readonly>
+        <div class="item item--memory" id="mc">mc</div>
+        <div class="item item--memory" id='m'>m</div>
+        <div class="item item--memory" id='mr'>mr</div>
+        <div class="item" id="clean">C</div>
+        <div class="item" data-action="/">&divide;</div>
+        <div class="item" data-action="*">&times;</div>
+        <div class="item" data-action="-">-</div>
+        <div class="item" id="back">&larr;</div>
+        <div class="item" data-action="7">7</div>
+        <div class="item" data-action="8">8</div>
+        <div class="item" data-action="9">9</div>
+        <div class="item" data-action="(">(</div>
+        <div class="item" data-action="4">4</div>
+        <div class="item" data-action="5">5</div>
+        <div class="item" data-action="6">6</div>
+        <div class="item" data-action=")">)</div>
+        <div class="item" data-action="1">1</div>
+        <div class="item" data-action="2">2</div>
+        <div class="item" data-action="3">3</div>
+        <div class="item" id="calc">=</div>
+        <div class="item" data-action=".">.</div>
+        <div class="item" data-action="0">0</div>
+        <div class="item item--mid" data-action="+">+</div>
+
+    </div>
+    <script>
+        const input = document.querySelector('#text');
+        let actions = document.querySelectorAll('.item[data-action]');
+
+        for (let action of actions) {
+            action.addEventListener('click', () => {
+                input.value += action.getAttribute('data-action');
+            })
+        }
+
+        const clean = document.getElementById('clean').addEventListener('click', () => {
+            input.value = "";
+        })
+
+
+        const back = document.getElementById('back').addEventListener('click', () => {
+            let str = input.value;
+            input.value = str.slice(0, str.length - 1);
+        })
+
+        const calc = document.getElementById('calc').addEventListener('click', () => {
+            input.value = eval(input.value);
+        })
+
+            + function memory() {
+                let btnMemory = document.querySelectorAll(".item--memory");
+                let memored = "";
+                for (btn of btnMemory) {
+                    btn.addEventListener('click', (event) => {
+                        let id = event.target.id;
+                        if (id == "m") {
+                            memored = text.value;
+                        } else if (id == "mr") {
+                            text.value += memored;
+                        } else {
+                            memored = "";
+
+                        }
+                    })
+                }
+            }();
+
+    </script>
+</body>
+
+</html>
