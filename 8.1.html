@@ -43,17 +43,27 @@
         }
 
         .item--long {
-            grid-column-start: 1;
+            grid-column-start: 2;
             grid-column-end: 5;
             width: 100%;
-            padding: 0;
+
             border: 1px solid black;
+            border-left: none;
             outline: none;
             text-align: right;
-            padding-right: 5px;
-            font-size: 20px;
+            padding: 0 4px 0 4px;
+            font-size: 15px;
         }
 
+        .item--min {
+            display: inline-block;
+            border-right: none;
+            text-align: left;
+            padding-top: 0;
+            font-size: 15px;
+            padding-left: 3px;
+            color: lightgreen;
+        }
 
         .item--mid {
             grid-column-start: 3;
@@ -64,15 +74,12 @@
         .item--memory {
             background-color: lightgreen;
         }
-
-        .active {
-            background-color: white;
-        }
     </style>
 </head>
 
 <body>
     <div class="container" id="box">
+        <span class="item item--min"></span>
         <input class="item item--long" type="text" id="text" readonly>
         <div class="item item--memory" id="mc">mc</div>
         <div class="item item--memory" id='m'>m</div>
@@ -123,18 +130,21 @@
             input.value = eval(input.value);
         })
 
-            + function memory() {
+            + function memored() {
                 let btnMemory = document.querySelectorAll(".item--memory");
-                let memored = "";
+                let view = document.querySelector('.item--min')
+                let memory = "";
                 for (btn of btnMemory) {
                     btn.addEventListener('click', (event) => {
                         let id = event.target.id;
                         if (id == "m") {
-                            memored = text.value;
+                            memory = text.value;
+                            view.innerHTML = "m";
                         } else if (id == "mr") {
                             text.value += memored;
                         } else {
-                            memored = "";
+                            memory = "";
+                            view.innerHTML = "";
 
                         }
                     })
