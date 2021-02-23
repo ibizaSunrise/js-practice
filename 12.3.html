@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12</title>
+    <style>
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        input[type="text"],
+        p {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            background-color: cyan;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input type="text" id='inp' placeholder="yyyy-mm-dd">
+        <label>Today<input type="radio" name="a" value="today" checked></label>
+        <label>Tomorrow<input type="radio" name="a" value="tomorrow"></label>
+        <label>Day after tomorrow<input type="radio" name="a" value="dayAfTm"></label>
+        <h1 id="title"></h1>
+        <h2 id='desc'></h2>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const data = {
+            Aries: ['Aries-data1', 'Aries-data2', 'Aries-data3'],
+            Taurus: ['Taurus-data1', 'Taurus-data2', 'Taurus-data3'],
+            Gemini: ['Gemini-data1', 'Gemini-data2', 'Gemini-data3'],
+            Cancer: ['Cancer-data1', 'Cancer-data2', 'Cancer-data3'],
+            Leo: ['Leo-data1', 'Leo-data2', 'Leo-data3'],
+            Virgo: ['Virgo-data1', 'Virgo-data2', 'Virgo-data3'],
+            Libra: ['Libra-data1', 'Libra-data2', 'Libra-data3'],
+            Scorpio: ['Scorpio-data1', 'Scorpio-data2', 'Scorpio-data3'],
+            Sagitarius: ['Sagitarius-data1', 'Sagitarius-data2', 'Sagitarius-data3'],
+            Capricorn: ['Capricorn-data1', 'Capricorn-data2', 'Capricorn-data3'],
+            Aquarius: ['Aquarius-data1', 'Aquarius-data2', 'Aquarius-data3'],
+            Pisces: ['Pisces-data1', 'Pisces-data2', 'Pisces-data3'],
+        };
+        let inp = document.querySelector('#inp');
+
+        inp.addEventListener('keydown', handlerKeydown);
+
+        function handlerKeydown(event) {
+            let userBirhday = inp.value;
+            if (event.key == 'Enter') {
+                let str = userBirhday.slice(5, 10);
+                if (str >= '03-21' && str <= '04-19') {
+                    useData('Aries');
+                } else if (str >= '04-20' && str <= '05-20') {
+                    useData('Taurus');
+                } else if (str >= '05-21' && str <= '06-20') {
+                    useData('Gemini');
+                } else if (str >= '06-21' && str <= '07-22') {
+                    useData('Cancer');
+                } else if (str >= '07-23' && str <= '08-22') {
+                    useData('Leo');
+                } else if (str >= '08-23' && str <= '09-22') {
+                    useData('Virgo');
+                } else if (str >= '09-23' && str <= '10-22') {
+                    useData('Libra');
+                } else if (str >= '10-23' && str <= '11-21') {
+                    useData('Scorpio');
+                } else if (str >= '11-22' && str <= '12-21') {
+                    useData('Sagitarius');
+                } else if (str >= '02-19' && str <= '03-20') {
+                    useData('Pisces');
+                } else if (str >= '01-20' && str <= '02-18') {
+                    useData('Aquarius');
+                } else {
+                    useData('Capricorn');
+                }
+            }
+
+        };
+
+
+
+        function useData(name) {
+            let res = document.querySelector('#result');
+            let title = document.querySelector('#title');
+            title.innerHTML = name;
+            let radios = document.querySelectorAll('input[type = "radio"]');
+
+
+            for (let radio of radios) {
+                if (radio.checked) {
+                    let desc = document.querySelector('#desc');
+                    let date = new Date();
+                    let val = radio.value;
+                    switch (val) {
+                        case 'today':
+                            desc.innerHTML = `Today ${addDate(date)}`;
+                            res.innerHTML = data[name][0];
+                            break;
+                        case 'tomorrow':
+                            date.setDate(date.getDate() + 1);
+                            desc.innerHTML = `Tomorrow ${addDate(date)}`;
+                            res.innerHTML = data[name][1];
+                            break;
+                        case 'dayAfTm':
+                            date.setDate(date.getDate() + 2);
+                            desc.innerHTML = `Day after tomorrow ${addDate(date)}`;
+                            res.innerHTML = data[name][2];
+                            break;
+                    }
+
+                }
+            }
+
+        }
+
+        function addDate(date) {
+            return `${date.getFullYear()}.${addZero(date.getMonth() + 1)}.${addZero(date.getDate())}`
+        }
+
+        function addZero(num) {
+            return num <= 9 ? num = '0' + num : num;
+        }
+
+
+
+    </script>
+</body>
+
+</html>
