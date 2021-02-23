@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.4</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           
+        }
+
+        #list {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+        }
+
+        #list li {
+            margin-right: 4px;
+        }
+
+        .marker {
+            background-color: chartreuse;
+        }
+
+        .left,
+        .right {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: chartreuse;
+            text-align: center;
+            cursor: pointer;
+            font-size: 25px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="info"></div>
+        <div class="nav">
+            <buton class="left">&lsaquo;</buton>
+            <buton class="right">&rsaquo;</buton>
+        </div>
+        <ul id="list">
+
+        </ul>
+    </div>
+    <script>
+        const date = new Date();
+        const list = document.querySelector("#list")
+
+
+        const renderCalendar = () => {
+
+            let currentDay = date.getDate();
+            let currentYear = date.getFullYear();
+            let currentMonth = date.getMonth();
+
+            const lastDay = new Date(currentYear,
+                currentMonth + 1, 0).getDate();
+
+
+            const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+
+            let info = document.querySelector('.info');
+            info.innerHTML = months[currentMonth] + ', ' + currentYear;
+
+            let days = '';
+            for (let i = 1; i <= lastDay; i++) {
+                if (
+                    i === new Date().getDate() &&
+                    date.getMonth() === new Date().getMonth()
+                ) {
+                    days += `<li class="marker">${i}</li>`;
+                } else {
+                    days += `<li>${i}</li>`;
+                    list.innerHTML = days;
+                }
+            }
+
+        };
+
+        function removeList() {
+            let ul = document.querySelectorAll('#list li');
+            for (let li of ul) {
+                list.removeChild(li);
+            }
+        }
+
+        document.querySelector(".left").addEventListener("click", () => {
+            removeList();
+            date.setMonth(date.getMonth() - 1);
+            renderCalendar();
+
+        });
+
+        document.querySelector(".right").addEventListener("click", () => {
+            removeList();
+            date.setMonth(date.getMonth() + 1);
+            renderCalendar();
+        });
+
+        renderCalendar();
+
+
+    </script>
+</body>
+
+</html>
