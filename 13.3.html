@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13.3</title>
+    <style>
+        #parent {
+            text-align: center;
+        }
+
+        #parent>* {
+            margin-bottom: 10px;
+        }
+
+        #timer {
+            font-size: 18px;
+        }
+
+        #text {
+            font-size: 17px;
+            font-style: italic;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:not(.active) {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <div id="timer">?</div>
+        <div id="text"></div>
+        <button id="start" class="active">узнать
+            свою судьбу</button>
+        <button id="stop">получить предсказание</button>
+    </div>
+    <script>
+        let parent = document.querySelector('#parent');
+        let timer = document.querySelector('#timer');
+        let text = document.querySelector('#text');
+        let start = document.querySelector('#start');
+        let stop = document.querySelector('#stop');
+        let timerId;
+        let positive = ['Удача улыбается тебе', 'Тебя ждет успех в делах', 'Скоро ты поправишь свое финансовое подожение', 'Впереди только успех', 'Скоро твоя проблема разрешится', 'Твои прежние усилия принесут плоды'];
+        let negative = ['Тебя ждет разочарование', "Тебе не повезет", "Угроза здоровью", "Финансовые проблемы"];
+        let mix = [...positive, ...negative].sort(() => Math.random() - 0.5);
+      
+        start.addEventListener('click', setTimer);
+
+        function setTimer() {
+            timerId = setInterval(() => {
+                timer.innerHTML = Math.floor(Math.random() * mix.length);
+
+                stop.classList.add('active')
+            }, 100);
+            // this.removeEventListener('click', setTimer);
+            start.classList.remove('active');
+        };
+
+        stop.addEventListener('click', () => {
+            clearInterval(timerId);
+            stop.classList.remove('active');
+            addMessage(+timer.innerHTML);
+        })
+
+
+        function addMessage(number) {
+            mix.forEach((element, index) => {
+                if (index === number) {
+                    text.innerHTML = element;
+                    positive.includes(element) ? text.style.color = "green" : text.style.color = "red";
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>
