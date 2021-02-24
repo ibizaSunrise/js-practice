@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14.1</title>
+    <style>
+        #parent {
+            position: relative;
+        }
+
+        #elem {
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        #parent ul {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            background-color: white;
+        }
+
+        #parent li {
+            border: 1px solid gray;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        #parent li:hover {
+            border: 1px solid black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <input id="elem" autocomplete="off">
+        <ul id="list"></ul>
+    </div>
+    text text text text text
+
+    <script>
+        let arr = ['Argentina', 'Armenia', 'Belarus', 'Belgium', 'Bulgaria'];
+        let elem = document.querySelector('#elem');
+        let list = document.querySelector('#list');
+
+        elem.addEventListener('input', handlerInput);
+
+        function handlerInput() {
+            let val = elem.value;
+            let result = arr.filter(item => item.includes(val));
+            let li = '';
+            result.forEach(el => {
+                li += `<li>${el}</li>`;
+            })
+            list.innerHTML = li;
+            let allLi = document.querySelectorAll('#list li');
+            for (let oneLi of allLi) {
+                oneLi.addEventListener('click', () => {
+                    elem.value = oneLi.innerHTML;
+                    list.innerHTML = "";
+                })
+            }
+
+            if (elem.value == "") list.innerHTML = "";
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
