@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15.1</title>
+    <style>
+    .spoiler:not(.active) {
+	display: none;
+}
+    </style>
+</head>
+
+<body>
+    <p>
+        абзац с текстом
+    </p>
+    <p>
+        абзац с текстом
+        <a href="#" class="toggle">развернуть спойлер 1</a>
+    </p>
+    <p class="spoiler">
+        скрытый спойлер 1
+    </p>
+    <p>
+        абзац с текстом
+    </p>
+    <p>
+        абзац с текстом
+        <a href="#" class="toggle">развернуть спойлер 2</a>
+    </p>
+    <p class="spoiler">
+        скрытый спойлер 2
+    </p>
+    <p>
+        абзац с текстом
+    </p>
+    <p>
+        абзац с текстом
+    </p>
+    <p>
+        абзац с текстом
+        <a href="#" class="toggle">развернуть спойлер 3</a>
+    </p>
+    <p class="spoiler">
+        скрытый спойлер 3
+    </p>
+    <p>
+        абзац с текстом
+    </p>
+    <p>
+        абзац с текстом
+        <a href="#" class="toggle">развернуть спойлер 4</a>
+    </p>
+    <p class="spoiler">
+        скрытый спойлер 4
+    </p>
+    <p>
+        абзац с текстом
+    </p>
+    <script>
+        document.addEventListener('click', (event) =>{
+            event.preventDefault();
+            let a = event.target.closest('.toggle');
+         
+          a && a.parentElement.nextElementSibling.classList.toggle('active');
+             
+        });
+    </script>
+
+</body>
+
+</html>
