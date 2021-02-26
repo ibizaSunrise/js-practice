@@ -19,7 +19,7 @@
         let cities = [];
 
         field.addEventListener('keydown', (e) => {
-            let word = field.value;
+            let word = field.value.toLowerCase();
 
             if (e.code == "Enter") {
 
@@ -39,7 +39,7 @@
                     }
 
                 }
-                
+
                 allWords.innerHTML = cities.map(el => el[0].toUpperCase() + el.slice(1)).join(', ');
                 field.value = '';
             }
