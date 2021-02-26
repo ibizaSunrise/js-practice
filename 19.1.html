@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18</title>
+</head>
+
+<body>
+    <input id="field">
+    <div id="message"></div>
+    <div class="allwords"></div>
+    <script>
+        let field = document.querySelector('#field');
+        let message = document.querySelector('#message');
+        let allWords = document.querySelector('.allwords');
+        let cities = [];
+
+        field.addEventListener('keydown', (e) => {
+            let word = field.value;
+
+            if (e.code == "Enter") {
+
+                if (cities.length === 0) {
+                    message.innerHTML = '';
+                    cities.push(word.toLowerCase());
+                    
+                } else {
+
+                    if (checkLetters(cities, word) && !checkWord(cities, word)) {
+                        cities.push(word);
+                        
+                    } else if (!checkLetters(cities, word)) {
+                        message.innerHTML = 'Слово должно начинаться на последнюю букву предыдущего';
+                    } else {
+                        message.innerHTML = 'Такое слово уже есть';
+                    }
+
+                }
+                
+                allWords.innerHTML = cities.map(el => el[0].toUpperCase() + el.slice(1)).join(', ');
+                field.value = '';
+            }
+
+        })
+
+        function checkLetters(arr, str) {
+            let firstLetter = str.toLowerCase().slice(0, 1);
+            let lastLetter = arr[arr.length - 1].slice(-1).toLowerCase();
+
+            if (firstLetter !== lastLetter) {
+                return false
+            };
+            return true;
+        }
+
+        function checkWord(arr, str) {
+            return arr.find(el => el.toLowerCase() == str.trim().toLowerCase());
+        }
+
+
+    </script>
+</body>
+
+</html>
