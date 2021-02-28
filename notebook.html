@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27.1 - </title>
+    <style>
+        #wrapper {
+            width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #menu {
+            width: 150px;
+            position: absolute;
+            right: 105%;
+        }
+
+        #notes {
+            padding: 0;
+            margin: 0;
+        }
+
+        #notes li {
+            padding: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+            border: 1px dashed gray;
+            list-style-type: none;
+            cursor: pointer;
+        }
+
+        #notes span{
+            display: inline-block;
+            color: red;
+            margin-left: 50px;
+        }
+
+        /* #notes li:hover,
+        #notes li.active {
+            background: #f1f1f1;
+        } */
+
+        #create button {
+            width: 100%;
+            padding: 5px;
+        }
+
+        #text textarea {
+            width: 100%;
+            height: 400px;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #text button {
+            width: 100%;
+            height: 30px;
+        }
+
+        .highlight {
+            background: lightgrey;
+        }
+
+        .message{
+            font-size: 3rem;
+            color: red;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="menu">
+            <ul id="notes">
+
+            </ul>
+            <div id="create">
+                <button>Create Mode</button>
+            </div>
+        </div>
+        <div id="text">
+            <textarea></textarea>
+            <button data-mode="create">сохранить</button>
+        </div>
+        <div class="message">Create Mode</div>
+    </div>
+    <script>
+        let texts = [];
+        let selectedLi;
+
+        document.addEventListener('click', (e) => {
+    
+            let changeMod = document.querySelector('#create').firstElementChild;
+            let textarea = document.querySelector('#text').firstElementChild;
+            let ul = document.querySelector('#notes');
+            let save = document.querySelector('#text').lastElementChild;
+            let message = document.querySelector('.message');
+
+            if (e.target == save) {
+                let mode = e.target.dataset.mode;
+    
+                //----------
+                if (mode == 'create') {
+                    texts.push(textarea.value);
+                   
+                    let li = document.createElement('li');
+                    let span = document.createElement('span');
+                    let k;
+                    for(k = 0; k< texts.length; k++);
+                    span.innerHTML = '&#9746';
+                    li.setAttribute('data-key', k);
+                    li.innerHTML = 'запись ' + k;
+                    li.append(span);
+                    ul.append(li);
+                    textarea.value = '';
+                   
+                }
+
+
+                if (mode == 'update') {
+                    let index = selectedLi.dataset.key;
+                    texts[index - 1] = textarea.value;
+                    textarea.value = '';
+                }
+                //----------
+
+            }
+            if(e.target.tagName == 'SPAN'){
+                let index = e.target.parentElement.getAttribute('data-key');
+                e.target.parentElement.remove();
+                message.innerHTML = 'Note removed';
+               
+
+                //Проблема с очисткой массива. Если очистить таким образом то начнут появлятся записи с повторяющимися номерами.
+                // console.log(index);
+                // texts = texts.filter(el => !el[index-1]);
+
+                //При надписи Note removed она не исчезает пока не включить mode.
+                
+                
+            }
+
+           
+            if (e.target.dataset.key) {
+
+                highlight(e.target);
+                let index = e.target.getAttribute('data-key');
+                textarea.value = texts[index - 1];
+
+            }
+
+
+            if (e.target == changeMod) {
+
+                if (save.dataset.mode == 'create') {
+                    save.dataset.mode = 'update';
+                    message.innerHTML = 'Update Mode';
+                    changeMod.textContent = 'Update Mode';
+                } else {
+                    save.dataset.mode = 'create';
+                    message.innerHTML = 'Create Mode';
+                    changeMod.textContent = 'Create Mode';
+                }
+
+            }
+
+        })
+
+        function highlight(li) {
+            if (selectedLi) {
+                selectedLi.classList.remove('highlight');
+            }
+            selectedLi = li;
+            selectedLi.classList.add('highlight');
+        }
+
+    </script>
+</body>
+
+</html>
