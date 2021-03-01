@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>37.1</title>
+    <style>
+        .right {
+            border: 1px solid green;
+        }
+
+        .wrong {
+            border: 1px solid red;
+        }
+
+        #btn {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test">
+        <div>
+            <p>вопрос 1?</p>
+            <input data-right="ответ 1">
+        </div>
+        <div>
+            <p>вопрос 2?</p>
+            <input data-right="ответ 2">
+        </div>
+        <div>
+            <p>вопрос 3?</p>
+            <input data-right="ответ 3">
+        </div>
+    </div>
+    <button id='btn'>Check everything</button>
+    <script>
+        let answers = document.querySelectorAll('input');
+        let btn = document.querySelector('#btn');
+        btn.addEventListener('click', () => {
+            for (let answer of answers) {
+                answer.value == answer.dataset.right
+                ? answer.classList.add('right')
+                : answer.classList.add('wrong');
+            }
+        })
+
+    </script>
+</body>
+
+</html>
