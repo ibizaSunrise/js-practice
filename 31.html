@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>31-36</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #parent {
+            margin: 0 auto;
+            width: 500px;
+        }
+
+        #form {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        #form input {
+            padding: 8px;
+            width: 24%;
+            margin: 0 0.5% 10px 0.5%;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 7px;
+        }
+
+        #table {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #table td,
+        #table th {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        #table td.remove {
+            color: blue;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        #table td.remove:hover {
+            text-decoration: none;
+        }
+
+        #result {
+            text-align: right;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <div id="form">
+            <input id="name" placeholder="название">
+            <input id="price" placeholder="цена">
+            <input id="amount" placeholder="количество">
+            <input id="add" type="button" value="добавить">
+        </div>
+
+        <h2>Таблица продуктов:</h2>
+        <table id="table">
+            <tr>
+                <th>название</th>
+                <th>цена</th>
+                <th>кол-во</th>
+                <th>сумма</th>
+                <th>удалить</th>
+            </tr>
+        </table>
+        <div id="result">
+            общий итог: <span id="total">0</span>
+        </div>
+    </div>
+    <script>
+        let name = document.querySelector('#name');
+        let price = document.querySelector('#price');
+        let amount = document.querySelector('#amount');
+        let add = document.querySelector('#add');
+        let table = document.querySelector('#table');
+        let total = document.querySelector('#total');
+
+        add.addEventListener('click', function () {
+            let tr = document.createElement('tr');
+
+            allowEdit(createCell(tr, name.value, 'name'));
+            allowEdit(createCell(tr, price.value, 'price'));
+            allowEdit(createCell(tr, amount.value, 'amount'));
+            createCell(tr, price.value * amount.value, 'cost');
+            createCell(tr, 'удалить', 'remove').addEventListener('click', function () {
+                tr.remove();
+                recountTotal();
+            });
+
+            name.value = '';
+            price.value = '';
+            amount.value = '';
+            table.appendChild(tr);
+            recountTotal();
+
+        });
+
+
+        function createCell(tr, value, name) {
+            let td;
+
+            td = document.createElement('td');
+            td.innerHTML = value;
+            td.classList.add(name);
+            tr.appendChild(td);
+
+            return td;
+
+        }
+
+        function recountTotal() {
+            let costs = table.querySelectorAll('.cost');
+
+            if (costs) {
+               
+                let res = 0
+                for (let item of costs) {
+                    res += +item.innerHTML;
+                }
+                total.innerHTML = res;
+            }
+        }
+
+        function allowEdit(td) {
+            td.addEventListener('dblclick', function () {
+                let text = td.innerHTML
+                td.innerHTML = '';
+
+                let input = document.createElement('input');
+                input.value = text;
+                input.focus();
+                td.appendChild(input);
+
+                input.addEventListener('keydown', function (event) {
+                    if (event.key == 'Enter') {
+                        td.innerHTML = this.value;
+
+                        if (td.classList.contains('price') || td.classList.contains('amount')) {
+
+                            counter();
+                            recountTotal();
+
+                        }
+                    }
+                });
+            });
+        }
+
+        function counter() {
+            let rows = document.querySelectorAll('#table tr');
+
+            for (row of rows) {
+                let tdInRow = row.querySelectorAll('td');
+            
+                for(let i = 0; i< tdInRow.length; i++){
+                   tdInRow[3].innerHTML = tdInRow[1].innerHTML * tdInRow[2].innerHTML;
+                }
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>
