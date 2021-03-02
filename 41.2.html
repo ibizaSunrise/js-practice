@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>41.2</title>
+</head>
+<style>
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    #btn {
+        margin-top: 2rem;
+    }
+</style>
+
+<body>
+    <div id="test">
+        <div>
+            <p>вопрос 1?</p>
+
+            <label>
+                <input type="radio" name="1" data-right>
+                вариант 1
+            </label>
+            <label>
+                <input type="radio" name="1">
+                вариант 2
+            </label>
+            <label>
+                <input type="radio" name="1">
+                вариант 3
+            </label>
+        </div>
+        <div>
+            <p>вопрос 2?</p>
+
+            <label>
+                <input type="radio" name="2">
+                вариант 1
+            </label>
+            <label>
+                <input type="radio" name="2" data-right>
+                вариант 2
+            </label>
+            <label>
+                <input type="radio" name="2">
+                вариант 3
+            </label>
+        </div>
+        <div>
+            <p>вопрос 3?</p>
+
+            <label>
+                <input type="radio" name="3">
+                вариант 1
+            </label>
+            <label>
+                <input type="radio" name="3">
+                вариант 2
+            </label>
+            <label>
+                <input type="radio" name="3" data-right>
+                вариант 3
+            </label>
+        </div>
+    </div>
+    <button id='btn'>check everything</button>
+    <script>
+        let radios = document.querySelectorAll('input[type="radio"]');
+        let btn = document.querySelector('#btn');
+
+        btn.addEventListener('click', () => {
+            for (let radio of radios) {
+                if (radio.checked) {
+                    let label = radio.parentElement;
+                    radio.hasAttribute('data-right')
+                        ? label.classList.add('green')
+                        : label.classList.add('red');
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

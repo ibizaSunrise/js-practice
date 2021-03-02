@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>40.1</title>
+</head>
+<style>
+    .right {
+        border: 1px solid green;
+    }
+
+    .wrong {
+        border: 1px solid red;
+    }
+
+    #button {
+        margin-top: 2rem;
+    }
+</style>
+
+<body>
+    <div id="test">
+
+    </div>
+    <button id="button">проверить ответы</button>
+    <script>
+
+
+        let questions = {
+            'Вопрос 1?': 'ответ 1',
+            'Вопрос 2?': 'ответ 2',
+            'Вопрос 3?': 'ответ 3',
+        }
+        let test = document.querySelector('#test');
+        let btn = document.querySelector('#button');
+
+        let block = (() => {
+            for (let key in questions) {
+                test.insertAdjacentHTML("beforeend", `
+                <div><p>${key}</p><input></div>
+                `);
+            }
+        })();
+
+        btn.addEventListener('click', () => {
+            let userAnswers = document.querySelectorAll('input');
+            for(let i = 0; i < userAnswers.length; i++){
+                let userAnswer = userAnswers[i].value;
+                let question = userAnswers[i].previousElementSibling.innerHTML;
+
+                for(let key in questions){
+                    if(question == key){
+                        if(userAnswer == questions[key]){
+                            userAnswers[i].classList.add('right'); 
+                        }else{
+                            userAnswers[i].classList.add('wrong');
+                        }
+                    
+                    }
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

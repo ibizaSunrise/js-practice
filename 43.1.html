@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>43.1</title>
+</head>
+<style>
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+
+    #btn {
+        margin-top: 2rem;
+    }
+</style>
+
+<body>
+    <div id="test"></div>
+    <button id="btn">проверить ответы</button>
+
+    <script>
+        let questions = [
+            {
+                text: 'вопрос 1?',
+                right: 0,
+                variants: [
+                    'вариант 1',
+                    'вариант 2',
+                    'вариант 3'
+                ]
+            },
+            {
+                text: 'вопрос 2?',
+                right: 1,
+                variants: [
+                    'вариант 1',
+                    'вариант 2',
+                    'вариант 3'
+                ]
+            },
+            {
+                text: 'вопрос 3?',
+                right: 2,
+                variants: [
+                    'вариант 1',
+                    'вариант 2',
+                    'вариант 3'
+                ]
+            },
+        ];
+
+        let test = document.querySelector('#test');
+        let btn = document.querySelector('#btn');
+
+        let block = (() => {
+            for (let i = 0; i < questions.length; i++) {
+                let div = document.createElement('div');
+                let p = document.createElement('p');
+                p.innerHTML = questions[i].text;
+                test.append(div);
+                div.append(p);
+                for (let j = 0; j < questions[i].variants.length; j++) {
+                    let radio = document.createElement('input');
+                    let label = document.createElement('label');
+                    label.innerHTML = questions[i].variants[j];
+                    radio.type = 'radio';
+                    radio.name = i + 1;
+                    label.prepend(radio);
+                    div.append(label);
+
+                }
+            }
+        })();
+
+        btn.addEventListener('click', () => {
+            let blocks = document.querySelectorAll('#test div');
+            //Перебираю блоки 
+            for (let i = 0; i < blocks.length; i++) {
+                let radios = blocks[i].querySelectorAll('input[type="radio"]');
+                
+                //Перебираю кнопки радио 
+                for (let j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) {
+                        let label = radios[j].parentElement;
+                        //Перебираю массив с данными 
+                        for (let k = 0; k < questions.length; k++) {
+                            if (j == questions[i].right) {
+                                label.classList.add('green')
+                            } else {
+                                label.classList.add('red');
+                            }
+
+                        }
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
