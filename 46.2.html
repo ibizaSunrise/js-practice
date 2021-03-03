@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>46.2</title>
+</head>
+
+<body>
+    <a href="" id="left">←</a>
+    <a href="" id="right">→</a><br>
+    <img id="slider" src="">
+    <script>
+        let texts = ['1.png', '2.png', '3.png'];
+        let slider = document.querySelector('#slider');
+        let left = document.querySelector('#left');
+        let right = document.querySelector('#right');
+
+        let i = 0;
+        let timerId = setInterval(() => {
+            slider.src = texts[i];
+            ++i;
+            if (i >= texts.length) {
+                i = 0;
+            }
+
+        }, 1000);
+   
+        left.addEventListener('click', function (e) {
+            e.preventDefault();
+            --i;
+            if (i < 0) {
+                i = texts.length - 1;
+            }
+
+            slider.src = texts[i];
+           
+        });
+        right.addEventListener('click', function (e) {
+            e.preventDefault();
+            ++i;
+            if (i >= texts.length) {
+                i = 0;
+            }
+            slider.src = texts[i];
+
+        });
+
+        
+    </script>
+</body>
+
+</html>
