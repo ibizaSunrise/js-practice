@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>47.1</title>
+</head>
+<style>
+    /* Обязательное условие наличие блока определенной ширины и высоты. В данном случае блок slider 200 на 200 и картинки такие же по размерам*/
+    #slider {
+        /* display: flex; */
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+
+</style>
+
+<body>
+    <div id="slider">
+        <img src="1.png">
+        <img src="2.png">
+        <img src="3.png">   
+    </div>
+
+    <script>
+        let slider = document.querySelector('#slider');
+        let images = document.querySelectorAll('#slider img');
+
+        let i = 0;
+        let timerId = setInterval(() => {
+            images[i].style.display = 'none';
+            ++i;
+            if (i >= images.length) {
+                i = 0;
+            }
+            images[i].style.display = 'block';
+        }, 2000);
+
+    </script>
+</body>
+
+</html>
