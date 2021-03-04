@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>54.1 - 58.1</title>
+</head>
+<style>
+    #field td {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .red {
+        background: red;
+    }
+
+    .green {
+        background: green;
+    }
+
+    .blue {
+        background: blue;
+    }
+</style>
+
+<body>
+    <p>Click: 0</p>
+    <table id="field"></table>
+    <script>
+        let rows = 3;
+        let cols = 3;
+        let field = document.querySelector('#field');
+        let colors = ['red', 'green', 'blue'];
+        let p = document.querySelector('p');
+
+
+        function createTable(rows, cols) {
+
+            for (let i = 0; i < rows; i++) {
+                let tr = document.createElement('tr');
+                for (let i = 0; i < cols; i++) {
+                    let td = document.createElement('td');
+                    td.classList.add(getRandomItem(colors));
+                    tr.append(td);
+
+                }
+                field.append(tr);
+            }
+        }
+        createTable(rows, cols);
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+
+        let allTd = document.querySelectorAll('#field td');
+        let countClick = 1;
+       
+        for (td of allTd) {
+            td.addEventListener('click', function () {
+                p.innerHTML = 'Count: ' + countClick;
+                let curentColor = this.getAttribute('class');
+                this.setAttribute('class', getNextColor(colors, curentColor));
+                let nextColor = this.getAttribute('class');
+                checkWin(allTd, nextColor);
+                countClick ++;
+            })
+            
+        }
+       
+        function getNextColor(arr, el) {
+
+            for (let i = 0; i < arr.length; i++) {
+                if (i == arr.length - 1) {
+                    return arr[0];
+                }
+                if (arr[i] == el) {
+                    return arr[i + 1];
+
+                }
+            }
+        }
+
+        function checkWin(nodeList, el) {
+            let i = 0;
+            for (let node of nodeList) {
+                if (node.classList.contains(el)) {
+                    ++i;
+                }
+            }
+            i === nodeList.length  && alert('You win!');
+        }
+     
+    </script>
+</body>
+
+</html>
