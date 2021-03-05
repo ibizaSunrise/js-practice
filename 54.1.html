@@ -62,7 +62,7 @@
 
         let allTd = document.querySelectorAll('#field td');
         let countClick = 1;
-       
+
         for (td of allTd) {
             td.addEventListener('click', function () {
                 p.innerHTML = 'Count: ' + countClick;
@@ -70,11 +70,11 @@
                 this.setAttribute('class', getNextColor(colors, curentColor));
                 let nextColor = this.getAttribute('class');
                 checkWin(allTd, nextColor);
-                countClick ++;
+                countClick++;
             })
-            
+
         }
-       
+
         function getNextColor(arr, el) {
 
             for (let i = 0; i < arr.length; i++) {
@@ -90,14 +90,54 @@
 
         function checkWin(nodeList, el) {
             let i = 0;
-            for (let node of nodeList) {
-                if (node.classList.contains(el)) {
+            for (let item of nodeList) {
+                if (item.classList.contains(el)) {
                     ++i;
                 }
             }
-            i === nodeList.length  && alert('You win!');
+            i === nodeList.length && field.insertAdjacentHTML('afterend', `<p>You win!  Минимальное количество ходов: ${getMinStepsCount(colors)}</p>`);
         }
-     
+
+
+
+
+        // 59.1 Попыталась найти минимальное колисчество ходов. Идея была такая, что бы исходя из текущего расклада цветов изначально дополнить их до одного цвета. Для этого сделан счетчик который должен был посчитать количество действий. Затем найти минимальное количество действий для каждого цвета. Это и будет минимальным количеством ходов. Но считает не правильно. Я думала что каждый раз когда функция будет входить в блок else счетчик будет увеличиваться столько раз сколько необходимо что бы получить определенный цвет. 
+
+
+        let count = 0;
+        let curentColor;
+        function getStepsCount(color) {
+          
+            for (let td of allTd) {
+
+                 curentColor = td.getAttribute('class');
+
+                if (curentColor == color) {
+                    continue;
+
+                } else {
+
+                    td.setAttribute('class', getNextColor(colors, curentColor));
+                    count += 1;
+                    getStepsCount(color);
+
+                }
+
+            }
+
+            return count;
+        }
+
+
+        function getMinStepsCount(arr) {
+            let steps = [];
+            arr.forEach(el => steps.push(getStepsCount(el)));
+            return (Math.min(...steps));
+
+        }
+
+        //------------------------------------
+
     </script>
 </body>
 
