@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>62.2-65.1</title>
+    <style>
+        #parent {
+            text-align: center;
+        }
+
+        #field {
+            display: inline-block;
+        }
+
+        #field td {
+            padding: 20px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .active {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <table id="field"></table>
+    </div>
+    <script>
+
+        let field = document.querySelector('#field');
+        start(2);
+
+        function start(size) {
+            activate(build(field, prepare(size)), size);
+        }
+
+        function build(field, arr) {
+            field.innerHTML = '';
+            let cells = [];
+            for (let subArr of arr) {
+                let tr = document.createElement('tr');
+                for (let elem of subArr) {
+                    let td = document.createElement('td');
+                    td.innerHTML = elem;
+                    cells.push(td);
+                    tr.append(td);
+
+                }
+                field.append(tr);
+            }
+
+            return cells;
+
+        }
+
+        function activate(cells, size) {
+            let counter = 1;
+
+            for (let cell of cells) {
+                cell.addEventListener('click', function () {
+                    if (this.innerHTML == counter) {
+                        this.classList.add('active');
+
+                        if (counter == size * size) {
+                            start(++size);
+                        }
+
+                        counter++;
+                    }
+                });
+            }
+        }
+
+
+        function prepare(size) {
+            let arr = [];
+
+            arr = range(size * size);
+            arr = shuffle(arr);
+            arr = chunk(arr, size);
+            return arr;
+        }
+
+
+        function range(count) {
+            let arr = [];
+            for (let i = 1; i <= count; i++) {
+                arr.push(i);
+            }
+
+            return arr;
+        }
+
+
+        function shuffle(arr) {
+            //Тасование Фишера-Йетса
+            for (let i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+
+            return arr;
+        }
+
+        function chunk(arr, n) {
+            return arr.map((_, index) => arr.slice(index * n, index * n + n)).filter(el => el.length);
+        }
+
+
+
+    </script>
+</body>
+
+</html>
