@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>60.1 - 62.1</title>
+    <style>
+        #parent {
+            text-align: center;
+        }
+
+        #field {
+            display: inline-block;
+        }
+
+        #field td {
+            padding: 20px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .active {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <table id="field"></table>
+    </div>
+    <script>
+
+        let field = document.querySelector('#field');
+        function build(field, arr) {
+            for (let subArr of arr) {
+                let tr = document.createElement('tr');
+                for (let elem of subArr) {
+                    let td = document.createElement('td');
+                    td.innerHTML = elem;
+                    tr.append(td);
+                }
+                field.append(tr);
+            }
+        }
+        build(field, prepare(2));
+
+
+        function prepare(size) {
+            let arr = [];
+
+            arr = range(size * size);
+            arr = shuffle(arr);
+            arr = chunk(arr, size);
+            return arr;
+        }
+
+
+        function range(count) {
+            let arr = [];
+            for (let i = 1; i <= count; i++) {
+                arr.push(i);
+            }
+
+            return arr;
+        }
+
+
+        function shuffle(arr) {
+            //Тасование Фишера-Йетса
+            for (let i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+
+            return arr;
+        }
+
+        function chunk(arr, n) {
+            return arr.map((_, index) => arr.slice(index * n, index * n + n)).filter(el => el.length);
+        }
+
+    </script>
+</body>
+
+</html>
