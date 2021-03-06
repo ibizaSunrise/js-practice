@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #parent {
+            text-align: center;
+        }
+
+        #calendar {
+            display: inline-block;
+        }
+
+        #calendar td,
+        #calendar th {
+            padding: 5px 12px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="parent">
+        <div id="calendar">
+            <table>
+                <thead>
+                    <tr>
+                        <th>пн</th>
+                        <th>вт</th>
+                        <th>ср</th>
+                        <th>чт</th>
+                        <th>пт</th>
+                        <th>сб</th>
+                        <th>вс</th>
+                    </tr>
+                </thead>
+                <tbody class="body"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        let calendar = document.querySelector('#calendar');
+        let body = calendar.querySelector('.body');
+
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+
+        //69.1
+        function range(count) {
+            let arr = [];
+            for (let i = 1; i <= count; i++) {
+                arr.push(i);
+            }
+
+            return arr;
+        }
+
+        function getLastDay(year, month) {
+            let date = new Date(year, month + 1, 0);
+            return date.getDate();
+        }
+
+
+        console.log(range(getLastDay(year, month)));
+
+        //70.1
+
+        function getFirstWeekDay(year, month) {
+            let date = new Date(year, month, 1);
+            return date.getDay();
+        }
+
+        function getLastWeekDay(year, month) {
+            let date = new Date(year, month, getLastDay(year, month));
+            return date.getDay();
+        }
+        let firstWeekDay = getFirstWeekDay(year, month);
+        let lastWeekDay = getLastWeekDay(year, month);
+
+        //71.1
+        function normalize(arr, left, right) {
+            return [...getEmptyArr(left), ...arr, ...getEmptyArr(right)];
+        }
+
+        function getEmptyArr(n) {
+            let arr = [];
+            for (let i = 1; i <= n; i++) {
+                arr.push("");
+            }
+
+            return arr;
+        }
+
+        let normalizedArr = normalize(range(getLastDay(year, month)), firstWeekDay, 6 - lastWeekDay);
+
+
+        //72.1
+
+        function chunk(arr, n) {
+            return arr.map((_, index) => arr.slice(index * n, index * n + n)).filter(el => el.length);
+        }
+        let matrix = chunk(normalizedArr, 7);
+        console.log(matrix);
+
+        //73.1
+    </script>
+</body>
+
+</html>
