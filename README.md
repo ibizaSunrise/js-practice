@@ -1,1 +1,1 @@
-## Выполненные звдaния из учебника: http://code.mu/ru/javascript/book/practice/
+## Выполненные зaдaния из учебника: http://code.mu/ru/javascript/book/practice/
