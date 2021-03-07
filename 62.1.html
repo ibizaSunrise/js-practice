@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>62.2-65.1</title>
+    <title>Рефакторинг функции 62.2-65.1</title>
     <style>
         #parent {
             text-align: center;
@@ -78,13 +78,9 @@
         }
 
 
+        //Рефакторинг 
         function prepare(size) {
-            let arr = [];
-
-            arr = range(size * size);
-            arr = shuffle(arr);
-            arr = chunk(arr, size);
-            return arr;
+            return chunk(shuffle(range(size * size)), size);
         }
 
 
@@ -99,7 +95,6 @@
 
 
         function shuffle(arr) {
-            //Тасование Фишера-Йетса
             for (let i = arr.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
                 [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -111,7 +106,6 @@
         function chunk(arr, n) {
             return arr.map((_, index) => arr.slice(index * n, index * n + n)).filter(el => el.length);
         }
-
 
 
     </script>
